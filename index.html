@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ختم قرآن گروهی</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dark: #0d3320;
+    --green-mid: #1a5c38;
+    --green-light: #2d8653;
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --cream: #fdf6e3;
+    --cream-dark: #f5e9c8;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-light: #888;
+    --done-bg: #0d3320;
+    --reading-bg: #c9a84c;
+    --free-bg: #f0ede4;
+    --shadow: 0 4px 24px rgba(0,0,0,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: var(--green-dark);
+    color: var(--text-dark);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  /* --- HEADER --- */
+  header {
+    background: var(--green-dark);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #2d8653 0%, transparent 70%);
+    opacity: 0.4;
+  }
+  .header-bismillah {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .header-title {
+    font-size: clamp(1.6rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+    line-height: 1.2;
+  }
+  .header-subtitle {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.55);
+    margin-top: 0.5rem;
+    position: relative;
+    font-weight: 300;
+  }
+  .header-ornament {
+    color: var(--gold);
+    font-size: 1.4rem;
+    letter-spacing: 0.5rem;
+    margin: 0.8rem 0;
+    position: relative;
+  }
+
+  /* --- MAIN CONTAINER --- */
+  main {
+    background: var(--cream);
+    border-radius: 28px 28px 0 0;
+    margin-top: 0;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* --- STATS BAR --- */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 1.8rem;
+  }
+  .stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* --- PROGRESS BAR --- */
+  .progress-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .progress-track {
+    height: 10px;
+    background: var(--cream-dark);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green-mid), var(--green-light));
+    border-radius: 99px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* --- JUZ GRID --- */
+  .section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--green-dark);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 16px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .juz-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  @media(max-width: 480px) { .juz-grid { grid-template-columns: repeat(5, 1fr); } }
+  .juz-cell {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    border: 2px solid transparent;
+    user-select: none;
+  }
+  .juz-cell:hover { transform: scale(1.07); }
+  .juz-cell.free {
+    background: var(--free-bg);
+    color: var(--text-mid);
+    border-color: #ddd;
+  }
+  .juz-cell.free:hover {
+    border-color: var(--gold);
+    background: #fffaf0;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.18);
+  }
+  .juz-cell.done {
+    background: var(--done-bg);
+    color: #fff;
+    cursor: default;
+  }
+  .juz-cell.done::after {
+    content: '✓';
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 0.6rem;
+    color: var(--gold-light);
+    opacity: 0.8;
+  }
+  .juz-cell.reading {
+    background: var(--reading-bg);
+    color: #fff;
+    cursor: default;
+  }
+  .juz-cell.selected {
+    background: var(--green-mid) !important;
+    color: #fff !important;
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.3) !important;
+    transform: scale(1.1);
+  }
+  .juz-num { font-size: 1rem; font-weight: 700; line-height: 1; }
+  .juz-name { font-size: 0.58rem; opacity: 0.75; margin-top: 2px; white-space: nowrap; overflow: hidden; max-width: 90%; text-overflow: ellipsis; }
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-mid);
+  }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+  /* --- REGISTRATION CARD --- */
+  .reg-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.4rem 1.4rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  @media(max-width: 440px) { .form-row { grid-template-columns: 1fr; } }
+  .field-label { font-size: 0.75rem; color: var(--text-light); margin-bottom: 5px; font-weight: 500; }
+  input[type=text] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #e5e0d5;
+    border-radius: 10px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    direction: rtl;
+  }
+  input[type=text]:focus { outline: none; border-color: var(--green-mid); background: #fff; }
+  .selected-juz-display {
+    padding: 10px 12px;
+    border: 1.5px solid #e5e0d5;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: var(--text-mid);
+    background: var(--cream);
+    min-height: 41px;
+  }
+  .selected-juz-display.active { border-color: var(--green-mid); color: var(--green-dark); font-weight: 600; }
+  .btn-primary {
+    background: var(--green-dark);
+    color: #fff;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 10px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-primary:hover { background: var(--green-mid); }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-done {
+    background: var(--gold);
+    color: var(--green-dark);
+    border: none;
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-right: 8px;
+  }
+  .btn-done:hover { background: var(--gold-light); }
+  .form-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .msg { font-size: 0.8rem; padding: 6px 12px; border-radius: 8px; }
+  .msg.success { background: #e8f5e9; color: #2e7d32; }
+  .msg.error { background: #ffeaea; color: #c62828; }
+
+  /* --- MEMBERS LIST --- */
+  .members-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    margin-bottom: 1.5rem;
+  }
+  .member-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0ede4;
+    animation: fadeIn 0.3s ease;
+  }
+  .member-row:last-child { border-bottom: none; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+  .avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .member-info { flex: 1; }
+  .member-name { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); }
+  .member-juz { font-size: 0.75rem; color: var(--text-light); margin-top: 1px; }
+  .badge {
+    font-size: 0.68rem; padding: 3px 9px; border-radius: 20px;
+    font-weight: 600;
+  }
+  .badge.done { background: #e8f5e9; color: #2e7d32; }
+  .badge.reading { background: #fff8e1; color: #f57f17; }
+
+  /* --- FIREBASE CONFIG NOTICE --- */
+  .config-notice {
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.85);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    border: 1px solid rgba(201,168,76,0.3);
+  }
+  .config-notice strong { color: var(--gold-light); }
+  .config-notice code {
+    background: rgba(255,255,255,0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.78rem;
+    color: #aef;
+  }
+
+  /* --- LOADING --- */
+  .loading-overlay {
+    position: fixed; inset: 0;
+    background: var(--green-dark);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 999;
+    transition: opacity 0.4s;
+  }
+  .loading-overlay.hide { opacity: 0; pointer-events: none; }
+  .loader-text {
+    color: var(--gold-light);
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem;
+    text-align: center;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+  /* --- TABS --- */
+  .tabs { display: flex; gap: 6px; margin-bottom: 1.2rem; }
+  .tab {
+    padding: 7px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 600;
+    cursor: pointer; border: 1.5px solid transparent; transition: all 0.2s;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    background: var(--free-bg); color: var(--text-mid);
+  }
+  .tab.active { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+
+  /* --- MY JUZ section --- */
+  .my-juz-card {
+    background: var(--green-dark);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .my-juz-card.show { display: block; }
+  .my-juz-title { font-size: 0.8rem; color: var(--gold-light); margin-bottom: 6px; font-weight: 600; }
+  .my-juz-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .my-juz-chip {
+    background: rgba(255,255,255,0.12); border-radius: 20px;
+    padding: 4px 12px; font-size: 0.78rem; color: #fff;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chip-done-btn {
+    background: var(--gold); color: var(--green-dark);
+    border: none; border-radius: 20px; padding: 1px 8px;
+    font-size: 0.7rem; font-weight: 700; cursor: pointer;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+  }
+  .empty-state {
+    text-align: center; padding: 2rem 1rem;
+    color: var(--text-light); font-size: 0.85rem;
+  }
+  .empty-state .icon { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.4; }
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading">
+  <div class="loader-text">
+    <div style="font-size:2rem;margin-bottom:0.5rem;">☽</div>
+    <div>در حال بارگذاری...</div>
+  </div>
+</div>
+
+<header>
+  <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+  <div class="header-ornament">✦ ✦ ✦</div>
+  <div class="header-title">ختم قرآن گروهی</div>
+  <div class="header-subtitle" id="group-name-display">در حال اتصال...</div>
+</header>
+
+<main>
+
+  <!-- Firebase Config Notice -->
+  <div class="config-notice" id="config-notice">
+    <strong>⚙️ راه‌اندازی Firebase:</strong> قبل از استفاده، مقادیر زیر را در کد جایگزین کنید:<br>
+    <code>YOUR_API_KEY</code> · <code>YOUR_PROJECT_ID</code> · <code>YOUR_APP_ID</code><br>
+    از <strong>console.firebase.google.com</strong> پروژه بسازید ← Firestore فعال کنید ← تنظیمات پروژه ← کد وب را کپی کنید.
+    <br><br>
+    <strong>قوانین Firestore</strong> (Rules tab):
+    <code>allow read, write: if true;</code>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-members">—</div>
+      <div class="stat-label">شرکت‌کننده</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-done">—</div>
+      <div class="stat-label">جزء تکمیل</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-pct">—</div>
+      <div class="stat-label">پیشرفت</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-left">—</div>
+      <div class="stat-label">باقی‌مانده</div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-section">
+    <div class="progress-label">
+      <span>پیشرفت ختم قرآن</span>
+      <span id="progress-text">۰ از ۳۰ جزء</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- My Juzes (if name entered) -->
+  <div class="my-juz-card" id="my-juz-card">
+    <div class="my-juz-title">جزءهای من</div>
+    <div class="my-juz-list" id="my-juz-list"></div>
+  </div>
+
+  <!-- JUZ Grid -->
+  <div class="section-title">نقشه ۳۰ جزء قرآن کریم</div>
+  <div class="juz-grid" id="juz-grid"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--done-bg)"></div> تکمیل‌شده</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--reading-bg)"></div> در حال خواندن</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--free-bg);border:1px solid #ccc"></div> آزاد (کلیک کنید)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green-mid)"></div> انتخاب‌شده</div>
+  </div>
+
+  <!-- Registration -->
+  <div class="reg-card">
+    <div class="section-title" style="margin-bottom:1rem;">انتخاب و ثبت جزء</div>
+    <div class="form-row">
+      <div>
+        <div class="field-label">نام شما</div>
+        <input type="text" id="inp-name" placeholder="مثلاً: علی احمدی" maxlength="30">
+      </div>
+      <div>
+        <div class="field-label">جزء انتخاب‌شده (از نقشه بالا)</div>
+        <div class="selected-juz-display" id="sel-display">روی جزء آزاد کلیک کنید</div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" onclick="registerJuz()">ثبت انتخاب</button>
+      <button class="btn-done" onclick="markDone()" id="btn-done" style="display:none">اتمام خواندن ✓</button>
+      <span class="msg" id="form-msg"></span>
+    </div>
+  </div>
+
+  <!-- Members List -->
+  <div class="section-title">شرکت‌کنندگان</div>
+  <div class="members-card">
+    <div id="members-list">
+      <div class="empty-state">
+        <div class="icon">☽</div>
+        <div>هنوز کسی ثبت‌نام نکرده</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, doc, onSnapshot, setDoc, updateDoc, deleteDoc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // ═══════════════════════════════════════════════════════
+  // ⚙️  اینجا مقادیر Firebase خودت رو جایگزین کن
+  // ═══════════════════════════════════════════════════════
+  const firebaseConfig = {
+    apiKey:            "YOUR_API_KEY",
+    authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId:         "YOUR_PROJECT_ID",
+    storageBucket:     "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId:             "YOUR_APP_ID"
+  };
+  // ═══════════════════════════════════════════════════════
+
+  const GROUP_NAME = "ختم قرآن رمضان ۱۴۰۴"; // نام گروه را تغییر بده
+
+  const JUZ_NAMES = [
+    "الم","سيقول","تلك الرسل","لن تنالوا","والمحصنات",
+    "لا يحب","وإذا سمعوا","ولو أننا","قال الملأ","واعلموا",
+    "يعتذرون","وما من دابة","وما أبرئ","ربما","سبحان الذي",
+    "قال ألم","اقترب","قد أفلح","وقال الذين","أمن خلق",
+    "اتل ما","ومن يقنت","وما لي","فمن أظلم","إليه يرد",
+    "حم","قال فما","قد سمع","تبارك الذي","عم يتساءلون"
+  ];
+
+  const AVATAR_COLORS = [
+    '#0d3320','#1a5c38','#2d8653','#8B4513','#6B3A6B',
+    '#1a4a7a','#7a3a1a','#3a1a5c','#1a5c5c','#5c1a3a'
+  ];
+
+  let app, db, juzCol;
+  let allJuz = {};
+  let selectedJuzId = null;
+  let myName = '';
+
+  // Init
+  try {
+    app = initializeApp(firebaseConfig);
+    db  = getFirestore(app);
+    juzCol = collection(db, 'khatm_juz');
+    document.getElementById('config-notice').style.display = 'none';
+    document.getElementById('group-name-display').textContent = GROUP_NAME;
+    startListener();
+  } catch(e) {
+    document.getElementById('group-name-display').textContent = 'خطا در اتصال به Firebase';
+    console.error(e);
+    hideLoading();
+    renderFallbackGrid();
+  }
+
+  function startListener() {
+    onSnapshot(juzCol, (snap) => {
+      allJuz = {};
+      snap.forEach(d => { allJuz[d.id] = d.data(); });
+      renderGrid();
+      renderStats();
+      renderMembers();
+      renderMyJuz();
+      hideLoading();
+    }, (err) => {
+      console.error(err);
+      hideLoading();
+    });
+  }
+
+  function hideLoading() {
+    const ol = document.getElementById('loading');
+    ol.classList.add('hide');
+    setTimeout(() => ol.remove(), 500);
+  }
+
+  // ─── GRID ───────────────────────────────────────────
+  function renderGrid() {
+    const grid = document.getElementById('juz-grid');
+    grid.innerHTML = '';
+    for (let i = 1; i <= 30; i++) {
+      const key = 'juz_' + i;
+      const data = allJuz[key];
+      const status = data ? data.status : 'free';
+      const user = data ? data.user : '';
+
+      const cell = document.createElement('div');
+      cell.className = 'juz-cell ' + status;
+      if (selectedJuzId === key && status === 'free') cell.classList.add('selected');
+
+      cell.innerHTML = `<div class="juz-num">${toPersian(i)}</div>
+        <div class="juz-name">${user || JUZ_NAMES[i-1]}</div>`;
+
+      if (status === 'free') {
+        cell.title = 'جزء ' + toPersian(i) + ' — آزاد (کلیک کنید)';
+        cell.onclick = () => selectJuz(key, i);
+      } else {
+        cell.title = user + ' — ' + (status === 'done' ? 'تکمیل‌شده' : 'در حال خواندن');
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  function renderFallbackGrid() {
+    const grid = document.getElementById('juz-grid');
+    grid.innerHTML = '';
+    for (let i = 1; i <= 30; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'juz-cell free';
+      cell.innerHTML = `<div class="juz-num">${toPersian(i)}</div><div class="juz-name">${JUZ_NAMES[i-1]}</div>`;
+      grid.appendChild(cell);
+    }
+  }
+
+  function selectJuz(key, num) {
+    selectedJuzId = key;
+    const el = document.getElementById('sel-display');
+    el.textContent = 'جزء ' + toPersian(num) + ' — ' + JUZ_NAMES[num-1];
+    el.classList.add('active');
+    renderGrid();
+  }
+
+  // ─── STATS ──────────────────────────────────────────
+  function renderStats() {
+    const done    = Object.values(allJuz).filter(j => j.status === 'done').length;
+    const reading = Object.values(allJuz).filter(j => j.status === 'reading').length;
+    const total   = 30;
+    const members = new Set(Object.values(allJuz).map(j => j.user).filter(Boolean)).size;
+    const pct     = Math.round(done / total * 100);
+
+    document.getElementById('stat-members').textContent = toPersian(members);
+    document.getElementById('stat-done').textContent    = toPersian(done);
+    document.getElementById('stat-pct').textContent     = toPersian(pct) + '٪';
+    document.getElementById('stat-left').textContent    = toPersian(total - done - reading);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent =
+      toPersian(done) + ' از ' + toPersian(total) + ' جزء';
+  }
+
+  // ─── MEMBERS ────────────────────────────────────────
+  function renderMembers() {
+    const map = {};
+    Object.entries(allJuz).forEach(([key, data]) => {
+      const n = data.user;
+      if (!n) return;
+      if (!map[n]) map[n] = { done: [], reading: [] };
+      map[n][data.status]?.push(parseInt(key.replace('juz_','')));
+    });
+
+    const list = document.getElementById('members-list');
+    if (!Object.keys(map).length) {
+      list.innerHTML = '<div class="empty-state"><div class="icon">☽</div><div>هنوز کسی ثبت‌نام نکرده</div></div>';
+      return;
+    }
+    list.innerHTML = '';
+    Object.entries(map).sort((a,b) => (b[1].done.length - a[1].done.length)).forEach(([name, info], idx) => {
+      const initials = name.slice(0, 2);
+      const color = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+      const allJuzNums = [...info.done, ...info.reading].sort((a,b)=>a-b);
+      const row = document.createElement('div');
+      row.className = 'member-row';
+      row.innerHTML = `
+        <div class="avatar" style="background:${color}">${initials}</div>
+        <div class="member-info">
+          <div class="member-name">${name}</div>
+          <div class="member-juz">جزء: ${allJuzNums.map(n => toPersian(n)).join('، ')}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+          ${info.done.length ? `<span class="badge done">✓ ${toPersian(info.done.length)} تکمیل</span>` : ''}
+          ${info.reading.length ? `<span class="badge reading">در حال خواندن</span>` : ''}
+        </div>`;
+      list.appendChild(row);
+    });
+  }
+
+  // ─── MY JUZ ─────────────────────────────────────────
+  function renderMyJuz() {
+    myName = document.getElementById('inp-name').value.trim();
+    const card = document.getElementById('my-juz-card');
+    const listEl = document.getElementById('my-juz-list');
+    if (!myName) { card.classList.remove('show'); return; }
+
+    const mine = Object.entries(allJuz).filter(([k,v]) => v.user === myName);
+    if (!mine.length) { card.classList.remove('show'); return; }
+
+    card.classList.add('show');
+    listEl.innerHTML = '';
+    mine.forEach(([key, data]) => {
+      const num = parseInt(key.replace('juz_',''));
+      const chip = document.createElement('div');
+      chip.className = 'my-juz-chip';
+      chip.innerHTML = `جزء ${toPersian(num)}
+        ${data.status === 'reading'
+          ? `<button class="chip-done-btn" onclick="markDoneById('${key}')">اتمام ✓</button>`
+          : '<span style="color:var(--gold-light);font-size:0.7rem">✓ تکمیل</span>'
+        }`;
+      listEl.appendChild(chip);
+    });
+  }
+
+  // ─── REGISTER ───────────────────────────────────────
+  window.registerJuz = async function() {
+    const name = document.getElementById('inp-name').value.trim();
+    const msg  = document.getElementById('form-msg');
+    msg.className = 'msg';
+    if (!name) { showMsg('نام خود را وارد کنید', 'error'); return; }
+    if (!selectedJuzId) { showMsg('یک جزء آزاد از نقشه انتخاب کنید', 'error'); return; }
+    const existing = allJuz[selectedJuzId];
+    if (existing && existing.status !== 'free') { showMsg('این جزء قبلاً انتخاب شده', 'error'); return; }
+
+    try {
+      await setDoc(doc(db, 'khatm_juz', selectedJuzId), {
+        user: name,
+        status: 'reading',
+        timestamp: Date.now()
+      });
+      const num = parseInt(selectedJuzId.replace('juz_',''));
+      showMsg('جزء ' + toPersian(num) + ' با موفقیت ثبت شد ✓', 'success');
+      selectedJuzId = null;
+      document.getElementById('sel-display').textContent = 'روی جزء آزاد کلیک کنید';
+      document.getElementById('sel-display').classList.remove('active');
+      document.getElementById('btn-done').style.display = 'none';
+    } catch(e) {
+      showMsg('خطا در ذخیره‌سازی: ' + e.message, 'error');
+    }
+  };
+
+  window.markDone = async function() {
+    const name = document.getElementById('inp-name').value.trim();
+    if (!name) { showMsg('نام خود را وارد کنید', 'error'); return; }
+    const mine = Object.entries(allJuz).find(([k,v]) => v.user === name && v.status === 'reading');
+    if (!mine) { showMsg('جزءی برای تکمیل پیدا نشد', 'error'); return; }
+    await markDoneById(mine[0]);
+  };
+
+  window.markDoneById = async function(key) {
+    try {
+      await updateDoc(doc(db, 'khatm_juz', key), { status: 'done' });
+      const num = parseInt(key.replace('juz_',''));
+      showMsg('جزء ' + toPersian(num) + ' تکمیل شد. مبارک باد! 🎉', 'success');
+    } catch(e) {
+      showMsg('خطا: ' + e.message, 'error');
+    }
+  };
+
+  // update my juz on name change
+  document.getElementById('inp-name').addEventListener('input', () => {
+    renderMyJuz();
+    const name = document.getElementById('inp-name').value.trim();
+    const hasReading = Object.values(allJuz).some(v => v.user === name && v.status === 'reading');
+    document.getElementById('btn-done').style.display = hasReading ? 'inline-block' : 'none';
+  });
+
+  // ─── HELPERS ────────────────────────────────────────
+  function showMsg(text, type) {
+    const el = document.getElementById('form-msg');
+    el.textContent = text;
+    el.className = 'msg ' + type;
+    setTimeout(() => { el.textContent = ''; el.className = 'msg'; }, 4000);
+  }
+
+  function toPersian(n) {
+    return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  }
+</script>
+</body>
+</html>
